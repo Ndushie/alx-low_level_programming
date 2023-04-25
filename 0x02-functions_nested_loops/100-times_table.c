@@ -25,23 +25,31 @@ void print_times_table(int n)
 			else
 			{
 				_putchar(' ');
-				if (answer < 10 && b != 0)
+				if (answer < 10 )
 				{
 					_putchar(' ');
 				}
 			}
 			if (answer < 10)
 			{
+				_putchar(' ');
 				_putchar(answer + '0');
+			}
+			else if (answer < 100)
+			{
+				_putchar((answer / 10) + '0');
+				_putchar((answer % 10) + '0');
 			}
 			else
 			{
-				_putchar((answer / 10) + '0');
+				_putchar((answer / 100) + '0');
+				_putchar(((answer / 10) % 10) + '0');
 				_putchar((answer % 10) + '0');
 			}
 			if (b != n)
 			{
 				_putchar(',');
+				_putchar(' ');
 			}
 		}
 		_putchar('\n');
