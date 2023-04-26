@@ -34,7 +34,9 @@ int main(void)
 		}
 		printf("%lu%010lu", half1, half2);
 		if (count != 97)
+		{
 			printf(", ");
+		}
 			fib1_half1 = fib2_half1;
 			fib1_half2 = fib2_half2;
 			fib2_half1 = half1;
