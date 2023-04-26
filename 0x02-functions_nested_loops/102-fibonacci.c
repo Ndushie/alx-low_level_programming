@@ -12,10 +12,10 @@ int main(void)
 
 	while (c < 50)
 	{
-		if (d == 0)
+		if (c == 0)
 			printf("%ld", a);
-		else if (d == 1)
-			printf(", %ld" b);
+		else if (c == 1)
+			printf(", %ld", b);
 		else
 		{
 			b += a;
