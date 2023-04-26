@@ -7,11 +7,11 @@
  */
 int main(void)
 {
-	unsigned long long int a = 0, b = 1, c;
+	long int a = 0, b = 1, c;
 
 	while (b != 420196140727489673)
 	{
-		printf("%llu", b);
+		printf("%ld", b);
 		if (b != 420196140727489673)
 		{
 			printf(", ");
@@ -20,6 +20,6 @@ int main(void)
 		a = b;
 		b = c;
 	}
-	printf("%llu", b);
+	printf("%ld", b);
 	return (0);
 }
