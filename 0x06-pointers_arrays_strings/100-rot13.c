@@ -18,7 +18,7 @@ char *rot13(char *string)
 	{
 		for (y = 0; y < 52; y++)
 		{
-			if (string[x] == alphabet1[x])
+			if (string[x] == alphabet1[y])
 			{
 				string[x] = alphabet2[y];
 				break;
