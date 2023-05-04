@@ -41,7 +41,7 @@ void print_buffer(char *b, int size)
 		{
 			int c = *(b + x + z);
 
-			if (c < 32 || c > 132)
+			if (c < 32 || c > 126)
 			{
 				c = '.';
 			}
