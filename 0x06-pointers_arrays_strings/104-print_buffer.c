@@ -8,7 +8,7 @@
  *
  * @size: size of the buffer
  *
- * Return: Always 0 success
+ * Return: void
  */
 
 void print_buffer(char *b, int size)
@@ -20,7 +20,7 @@ void print_buffer(char *b, int size)
 	if (size <= 0)
 	{
 		printf("\n");
-		return ;
+		return;
 	}
 	while (x < size)
 	{
@@ -41,7 +41,7 @@ void print_buffer(char *b, int size)
 		{
 			int c = *(b + x + z);
 
-			if (c < 32 || c > 126)
+			if (c < 32 || c > 132)
 			{
 				c = '.';
 			}
