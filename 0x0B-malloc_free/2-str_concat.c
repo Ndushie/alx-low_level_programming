@@ -26,7 +26,7 @@ char *str_concat(char *s1, char *s2)
 	concatenated_str = malloc((length1 + length2 + 1) * sizeof(char));
 
 	if (concatenated_str == NULL)
-		return NULL;
+		return (NULL);
 
 	strcpy(concatenated_str, s1);
 	strcat(concatenated_str, s2);
