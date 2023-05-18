@@ -3,50 +3,34 @@
 #include <ctype.h>
 #include "main.h"
 /**
- * multiply - Multiply two positive integers
+ * is_number - checks if a string is a number
  *
- * @num1: First number
- * @num2: Second number
+ * @str: string to check
  *
- * Return: The product of num1 and num2
+ * Return: 1 if str is a number, 0 otherwise
  */
-unsigned int multiply(unsigned int num1, unsigned int num2)
+int is_number(char *str)
 {
-	return (num1 * num2);
-}
+	int i;
 
-/**
- * is_positive_number - Check if a string represents a positive number
- *
- * @str: The string to check
- *
- * Return: 1 if the string is a positive number, 0 otherwise
- */
-int is_positive_number(const char *str)
-{
-	if (*str == '\0')
-		return (0);
-
-	while (*str)
-	{
-		if (!isdigit(*str))
+	for (i = 0; str[i]; i++)
+		if (!isdigit(str[i]))
 			return (0);
-		str++;
-	}
 
 	return (1);
 }
 /**
- * main - Entry point of the program
+ * main - multiplies two positive numbers
  *
- * @argc: Number of command-line arguments
- * @argv: Array of command-line arguments
+ * @argc: number of arguments
+ *
+ * @argv: array of arguments
  *
  * Return: 0 on success, 98 on error
  */
 int main(int argc, char *argv[])
 {
-	unsigned int num1, num2;
+	int num1, num2, answer;
 
 	if (argc != 3)
 	{
@@ -54,7 +38,7 @@ int main(int argc, char *argv[])
 		return (98);
 	}
 
-	if (!is_positive_number(argv[1]) || !is_positive_number(argv[2]))
+	if (!is_number(argv[1]) || !is_number(argv[2]))
 	{
 		printf("Error\n");
 		return (98);
@@ -62,8 +46,9 @@ int main(int argc, char *argv[])
 
 	num1 = atoi(argv[1]);
 	num2 = atoi(argv[2]);
+	answer = num1 * num2;
 
-	printf("%u\n", multiply(num1, num2));
+	printf("%d\n", answer);
 
 	return (0);
 }
