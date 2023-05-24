@@ -2,46 +2,43 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "3-calc.h"
-
 /**
- * main - Entry point
+ * main - Prints the result of simple operations.
+ * @argc: The number of arguments supplied to the program.
+ * @argv: An array of pointers to the arguments.
  *
- * @argc: The number of command-line arguments
- * @argv: An array of command-line argument strings
- *
- * Return: 0 on success, 98 for wrong number of arguments,
- *         99 for invalid operator,
- *         100 for division or modulo by zero.
+ * Return: Always 0.
  */
-int main(int argc, char *argv[])
+int main(int __attribute__((__unused__)) argc, char *argv[])
 {
 	int num1, num2;
-	int answer;
-	int (*op_func)(int, int);
+	char *operation;
 
 	if (argc != 4)
 	{
 		printf("Error\n");
-		return (98);
+		exit(98);
 	}
 
 	num1 = atoi(argv[1]);
+	operation = argv[2];
 	num2 = atoi(argv[3]);
 
-	op_func = get_op_func(argv[2]);
+	if (get_op_func(operation) == NULL || operation[1] != '\0')
+	{
+		printf("Error\n");
+		exit(99);
+	}
 
-	if (op_func == NULL)
+	if ((*operation == '/' && num2 == 0) ||
+	    (*operation == '%' && num2 == 0))
 	{
 		printf("Error\n");
-		return (99);
+		exit(100);
 	}
-	if ((*argv[2] == '/' || *argv[2] == '%') && num2 == 0)
-	{
-		printf("Error\n");
-		return (100);
-	}
-	answer = op_func(num1, num2);
-	printf("%d\n", answer);
+
+
+	printf("%d\n", get_op_func(operation)(num1, num2));
 
 	return (0);
 }
