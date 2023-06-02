@@ -1,17 +1,11 @@
-section .data
-    hello db 'Hello, Holberton', 0x0A
-    len equ $-hello
-
-section .text
-    global main
+global main
+extern printf
 
 main:
-    mov eax, 4              ; System call number for write
-    mov ebx, 1              ; File descriptor for stdout
-    mov ecx, hello          ; Address of the string to print
-    mov edx, len            ; Length of the string
-    int 0x80                ; Call the kernel
+    mov edi, format   ; Move the address of the format string into the edi register
+    xor eax, eax      ; Clear the eax register
+    call printf       ; Call the printf function, passing the address of the format string
+    mov eax, 0        ; Set the return value to 0 (success)
+    ret               ; Return from the main function
 
-    mov eax, 1              ; System call number for exit
-    xor ebx, ebx            ; Exit status 0
-    int 0x80                ; Call the kernel
+format: db `Hello, Holberton\n`, 0  ; Define the format string
