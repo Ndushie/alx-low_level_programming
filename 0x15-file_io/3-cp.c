@@ -6,6 +6,10 @@
 
 #define BUFFER_SIZE 1024
 
+void error_exit(const char *message, int exit_code);
+char *create_buffer(void);
+void close_file(int fd);
+
 /**
  * error_exit - Print an error message and exit with the given exit code.
  *
@@ -22,7 +26,7 @@ void error_exit(const char *message, int exit_code)
  *
  * Return: Pointer to the allocated buffer, or NULL on failure.
  */
-char *create_buffer()
+char *create_buffer(void)
 {
 	char *buffer = malloc(BUFFER_SIZE);
 
@@ -53,35 +57,49 @@ int main(int argc, char *argv[])
 {
 	int fd_from, fd_to;
 	ssize_t bytes_read, bytes_written;
-	char buffer[BUFFER_SIZE];
+	char *buffer;
 
 	if (argc != 3)
 		error_exit("Usage: cp file_from file_to", 97);
 
+	buffer = create_buffer();
+
 	fd_from = open(argv[1], O_RDONLY);
 	if (fd_from == -1)
-		error_exit("Error: Can't read from file", 98);
+	{
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
+		free(buffer);
+		exit(98);
+	}
 
-	fd_to = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC,
-			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	fd_to = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, 0664);
 	if (fd_to == -1)
-		error_exit("Error: Can't write to file", 99);
-
+	{
+		dprintf(STDERR_FILENO, "Error: Can't write to file %s\n", argv[2]);
+		free(buffer);
+		exit(99);
+	}
 	while ((bytes_read = read(fd_from, buffer, BUFFER_SIZE)) > 0)
 	{
 		bytes_written = write(fd_to, buffer, bytes_read);
 		if (bytes_written != bytes_read)
-			error_exit("Error: Can't write to file", 99);
+		{
+			dprintf(STDERR_FILENO, "Error: Can't write to file %s\n", argv[2]);
+			free(buffer);
+			exit(99);
+		}
 	}
 
 	if (bytes_read == -1)
-		error_exit("Error: Can't read from file", 98);
+	{
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
+		free(buffer);
+		exit(98);
+	}
 
-	if (close(fd_from) == -1)
-		error_exit("Error: Can't close fd", 100);
-
-	if (close(fd_to) == -1)
-		error_exit("Error: Can't close fd", 100);
+	close_file(fd_from);
+	close_file(fd_to);
+	free(buffer);
 
 	return (0);
 }
