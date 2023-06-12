@@ -18,6 +18,30 @@ void error_exit(const char *message, int exit_code)
 	exit(exit_code);
 }
 /**
+ * create_buffer - Allocates memory for a buffer.
+ *
+ * Return: Pointer to the allocated buffer, or NULL on failure.
+ */
+char *create_buffer()
+{
+	char *buffer = malloc(BUFFER_SIZE);
+
+	if (buffer == NULL)
+		error_exit("Error: Unable to allocate buffer", 1);
+
+	return (buffer);
+}
+/**
+ * close_file - Closes a file descriptor.
+ * @fd: The file descriptor to close.
+ */
+void close_file(int fd)
+{
+	if (close(fd) == -1)
+		error_exit("Error: Can't close file descriptor", 1);
+}
+
+/**
  * main - Entry point of the program.
  *
  * @argc: The number of command-line arguments.
@@ -38,7 +62,8 @@ int main(int argc, char *argv[])
 	if (fd_from == -1)
 		error_exit("Error: Can't read from file", 98);
 
-	fd_to = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	fd_to = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC,
+			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (fd_to == -1)
 		error_exit("Error: Can't write to file", 99);
 
@@ -58,5 +83,5 @@ int main(int argc, char *argv[])
 	if (close(fd_to) == -1)
 		error_exit("Error: Can't close fd", 100);
 
-	return 0;
+	return (0);
 }
