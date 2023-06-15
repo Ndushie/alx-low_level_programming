@@ -18,7 +18,7 @@ void close_file(int fd);
  */
 void error_exit(const char *message, int exit_code)
 {
-	dprintf(STDERR_FILENO, "Error: %s\n", message);
+	dprintf(STDERR_FILENO, "%s\n", message);
 	exit(exit_code);
 }
 /**
@@ -42,7 +42,7 @@ char *create_buffer(void)
 void close_file(int fd)
 {
 	if (close(fd) == -1)
-		error_exit("Error: Can't close file descriptor", 1);
+		error_exit("Error: Can't close fd", 1);
 }
 
 /**
