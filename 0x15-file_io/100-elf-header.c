@@ -13,7 +13,7 @@ void print_data(unsigned char *e_ident);
 void print_version(unsigned char *e_ident);
 void print_abi(unsigned char *e_ident);
 void print_osabi(unsigned char *e_ident);
-void print_type(unsigned int e_type);
+void print_type(unsigned int e_type, unsigned char *e_ident);
 void print_entry(unsigned long int e_entry, unsigned char *e_ident);
 void close_elf(int elf);
 
@@ -185,9 +185,13 @@ void print_abi(unsigned char *e_ident)
 /**
  * print_type - Prints the type of an ELF header.
  * @e_type: The ELF type.
+ * @e_ident: A pointer to an array containing the ELF class.
  */
-void print_type(unsigned int e_type)
+void print_type(unsigned int e_type, unsigned char *e_ident)
 {
+	if (e_ident[EI_DATA] == ELFDATA2MSB)
+		e_type >>= 8;
+
 	printf(" Type: ");
 
 	switch (e_type)
@@ -292,7 +296,7 @@ int main(int argc, char **argv)
 	print_version(e_ident);
 	print_abi(e_ident);
 	print_osabi(e_ident);
-	print_type(header->e_type);
+	print_type(header->e_type, e_ident);
 	print_entry(header->e_entry, e_ident);
 
 	close_elf(elf);
