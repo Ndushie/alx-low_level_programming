@@ -41,8 +41,11 @@ char *create_buffer(void)
  */
 void close_file(int fd)
 {
-	if (close(fd) == -1)
-		error_exit("Error: Can't close fd", 100);
+	if (close(fd) == -1) 
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
+		exit(100);
+	}
 }
 
 /**
