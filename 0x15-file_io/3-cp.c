@@ -42,7 +42,7 @@ char *create_buffer(void)
 void close_file(int fd)
 {
 	if (close(fd) == -1)
-		error_exit("Error: Can't close fd", 1);
+		error_exit("Error: Can't close fd", 100);
 }
 
 /**
@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
 	fd_from = open(argv[1], O_RDONLY);
 	if (fd_from == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't read from %s\n", argv[1]);
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
 		free(buffer);
 		exit(98);
 	}
