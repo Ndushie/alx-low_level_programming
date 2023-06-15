@@ -18,7 +18,7 @@ void close_file(int fd);
  */
 void error_exit(const char *message, int exit_code)
 {
-	dprintf(STDERR_FILENO, "%s\n", message);
+	dprintf(STDERR_FILENO, "Error: %s\n", message);
 	exit(exit_code);
 }
 /**
